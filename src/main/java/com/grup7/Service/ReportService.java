@@ -36,7 +36,7 @@ public class ReportService {
                 log.info("Reports dizini oluşturuldu: {}", reportsDir.getAbsolutePath());
             }
 
-            String fileName = String.format("reports/doluluk_raporu_%d_%02d.pdf", year, month);
+            String fileName = String.format("reports/occupancy_report_%d_%02d.pdf", year, month);
             log.info("Rapor oluşturuluyor: {}", fileName);
 
             Document document = new Document();
@@ -45,7 +45,7 @@ public class ReportService {
 
             // Başlık ekleme
             Font titleFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
-            Paragraph title = new Paragraph(String.format("%d - %d. Ay Doluluk Raporu", year, month), titleFont);
+            Paragraph title = new Paragraph(String.format("%d - %d Monthly Occupancy Report", year, month), titleFont);
             title.setAlignment(Element.ALIGN_CENTER);
             document.add(title);
             document.add(new Paragraph("\n"));
@@ -56,8 +56,8 @@ public class ReportService {
 
             // Tablo başlıkları
             Font headerFont = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
-            PdfPCell dateHeader = new PdfPCell(new Phrase("Tarih", headerFont));
-            PdfPCell occupancyHeader = new PdfPCell(new Phrase("Doluluk Oranı (%)", headerFont));
+            PdfPCell dateHeader = new PdfPCell(new Phrase("Date", headerFont));
+            PdfPCell occupancyHeader = new PdfPCell(new Phrase("Occupancy Rate (%)", headerFont));
 
             dateHeader.setHorizontalAlignment(Element.ALIGN_CENTER);
             occupancyHeader.setHorizontalAlignment(Element.ALIGN_CENTER);

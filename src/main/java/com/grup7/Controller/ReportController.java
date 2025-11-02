@@ -42,7 +42,7 @@ public class ReportController {
             }
 
             // İndirilecek dosya adı formatlanır
-            String fileName = String.format("doluluk_raporu_%d_%02d.pdf", year, month);
+            String fileName = String.format("occupancy_report_%d_%02d.pdf", year, month);
 
             // Dosya sistem kaynağı olarak hazırlanır
             Resource resource = new FileSystemResource(reportFile);
