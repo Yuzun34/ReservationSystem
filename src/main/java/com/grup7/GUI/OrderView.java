@@ -23,66 +23,142 @@ public class OrderView extends JFrame {
     @Getter private JButton btnRemove;
     @Getter private JButton btnSubmit;
 
+    // Modern renkler
+    private static final Color PRIMARY_COLOR = new Color(52, 152, 219);
+    private static final Color SECONDARY_COLOR = new Color(155, 89, 182);
+    private static final Color SUCCESS_COLOR = new Color(46, 204, 113);
+    private static final Color BACKGROUND_START = new Color(236, 240, 241);
+    private static final Color BACKGROUND_END = new Color(189, 195, 199);
+
     public OrderView() {
         // Form ayarları
-        setTitle("Sipariş Oluştur");
-        setSize(800, 600);
+        setTitle("🛒 Sipariş Oluştur");
+        setSize(900, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        // Kahvaltı resmi ile arka plan paneli
+        // Modern gradyan arka plan paneli
         BackgroundPanel mainPanel = new BackgroundPanel();
         mainPanel.setLayout(new BorderLayout(10, 10));
-        mainPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        mainPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
+
+        // Başlık paneli
+        JPanel headerPanel = new JPanel();
+        headerPanel.setOpaque(false);
+        headerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 20, 10));
+        JLabel titleLabel = new JLabel("Sipariş Oluştur", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 32));
+        titleLabel.setForeground(new Color(44, 62, 80));
+        headerPanel.add(titleLabel);
+        mainPanel.add(headerPanel, BorderLayout.NORTH);
 
         // Üst panel - Rezervasyon kodu
-        JPanel topPanel = new JPanel(new BorderLayout(5, 5));
-        topPanel.setOpaque(false); // Şeffaf panel
-        JLabel lblReservationCode = new JLabel("Rezervasyon Kodu:");
-        lblReservationCode.setFont(new Font("Arial", Font.BOLD, 18)); // Büyük ve kalın yazı tipi
-        txtReservationCode = new JTextField(20);
-        txtReservationCode.setFont(new Font("Arial", Font.PLAIN, 16)); // Giriş metni için büyük yazı tipi
-        topPanel.add(lblReservationCode, BorderLayout.WEST);
-        topPanel.add(txtReservationCode, BorderLayout.CENTER);
+        JPanel topPanel = new JPanel(new BorderLayout(10, 5));
+        topPanel.setOpaque(false);
+        topPanel.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createTitledBorder(
+                BorderFactory.createLineBorder(PRIMARY_COLOR, 2),
+                "  Rezervasyon Bilgisi  ",
+                0, 0,
+                new Font("Segoe UI", Font.BOLD, 16),
+                PRIMARY_COLOR
+            ),
+            BorderFactory.createEmptyBorder(15, 15, 15, 15)
+        ));
+        
+        JLabel lblReservationCode = new JLabel("🎫 Rezervasyon Kodu:");
+        lblReservationCode.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        lblReservationCode.setForeground(new Color(44, 62, 80));
+        
+        txtReservationCode = new JTextField(25);
+        txtReservationCode.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        txtReservationCode.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(200, 200, 200), 1),
+            BorderFactory.createEmptyBorder(10, 12, 10, 12)
+        ));
+        txtReservationCode.setPreferredSize(new Dimension(300, 40));
+        
+        JPanel codeInputPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
+        codeInputPanel.setOpaque(false);
+        codeInputPanel.add(lblReservationCode);
+        codeInputPanel.add(txtReservationCode);
+        
+        topPanel.add(codeInputPanel, BorderLayout.CENTER);
 
         // Orta panel - Kategori listeleri
-        JPanel centerPanel = new JPanel(new GridLayout(1, 3, 10, 0));
-        centerPanel.setOpaque(false); // Şeffaf panel
+        JPanel centerPanel = new JPanel(new GridLayout(1, 3, 15, 0));
+        centerPanel.setOpaque(false);
+        centerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         // Sol liste - Mevcut kategoriler
         JPanel leftPanel = new JPanel(new BorderLayout());
-        leftPanel.setOpaque(false); // Şeffaf panel
+        leftPanel.setOpaque(false);
+        leftPanel.setBorder(BorderFactory.createTitledBorder(
+            BorderFactory.createLineBorder(PRIMARY_COLOR, 2),
+            "  Mevcut Kategoriler  ",
+            0, 0,
+            new Font("Segoe UI", Font.BOLD, 16),
+            PRIMARY_COLOR
+        ));
+        
         categoryListModel = new DefaultListModel<>();
         categoryList = new JList<>(categoryListModel);
-        categoryList.setFont(new Font("Arial", Font.PLAIN, 16)); // Liste öğeleri için büyük yazı tipi
+        categoryList.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         categoryList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        categoryList.setBackground(Color.WHITE);
+        categoryList.setSelectionBackground(PRIMARY_COLOR);
+        categoryList.setSelectionForeground(Color.WHITE);
+        
         JScrollPane leftScroll = new JScrollPane(categoryList);
-        JLabel lblAvailableCategories = new JLabel("Mevcut Kategoriler:", SwingConstants.CENTER);
-        lblAvailableCategories.setFont(new Font("Arial", Font.BOLD, 18)); // Büyük ve kalın yazı tipi
-        leftPanel.add(lblAvailableCategories, BorderLayout.NORTH);
+        leftScroll.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        leftScroll.setPreferredSize(new Dimension(0, 300));
         leftPanel.add(leftScroll, BorderLayout.CENTER);
 
         // Sağ liste - Seçilen kategoriler
         JPanel rightPanel = new JPanel(new BorderLayout());
-        rightPanel.setOpaque(false); // Şeffaf panel
+        rightPanel.setOpaque(false);
+        rightPanel.setBorder(BorderFactory.createTitledBorder(
+            BorderFactory.createLineBorder(SECONDARY_COLOR, 2),
+            "  Seçilen Kategoriler  ",
+            0, 0,
+            new Font("Segoe UI", Font.BOLD, 16),
+            SECONDARY_COLOR
+        ));
+        
         selectedListModel = new DefaultListModel<>();
         selectedList = new JList<>(selectedListModel);
-        selectedList.setFont(new Font("Arial", Font.PLAIN, 16)); // Liste öğeleri için büyük yazı tipi
+        selectedList.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        selectedList.setBackground(Color.WHITE);
+        selectedList.setSelectionBackground(SECONDARY_COLOR);
+        selectedList.setSelectionForeground(Color.WHITE);
+        
         JScrollPane rightScroll = new JScrollPane(selectedList);
-        JLabel lblSelectedCategories = new JLabel("Seçilen Kategoriler:", SwingConstants.CENTER);
-        lblSelectedCategories.setFont(new Font("Arial", Font.BOLD, 18)); // Büyük ve kalın yazı tipi
-        rightPanel.add(lblSelectedCategories, BorderLayout.NORTH);
+        rightScroll.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        rightScroll.setPreferredSize(new Dimension(0, 300));
         rightPanel.add(rightScroll, BorderLayout.CENTER);
 
         // Orta butonlar
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-        buttonPanel.setOpaque(false); // Şeffaf panel
+        buttonPanel.setOpaque(false);
 
-        btnAdd = new JButton("Ekle >>");
-        btnAdd.setFont(new Font("Arial", Font.BOLD, 16)); // Büyük ve kalın yazı tipi
-        btnRemove = new JButton("<< Çıkar");
-        btnRemove.setFont(new Font("Arial", Font.BOLD, 16)); // Büyük ve kalın yazı tipi
+        btnAdd = new JButton("➡️ Ekle");
+        btnAdd.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        btnAdd.setBackground(PRIMARY_COLOR);
+        btnAdd.setForeground(Color.WHITE);
+        btnAdd.setFocusPainted(false);
+        btnAdd.setBorderPainted(false);
+        btnAdd.setPreferredSize(new Dimension(120, 45));
+        btnAdd.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        
+        btnRemove = new JButton("⬅️ Çıkar");
+        btnRemove.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        btnRemove.setBackground(new Color(231, 76, 60));
+        btnRemove.setForeground(Color.WHITE);
+        btnRemove.setFocusPainted(false);
+        btnRemove.setBorderPainted(false);
+        btnRemove.setPreferredSize(new Dimension(120, 45));
+        btnRemove.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         // Butonları ortala
         btnAdd.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -90,7 +166,7 @@ public class OrderView extends JFrame {
 
         buttonPanel.add(Box.createVerticalGlue());
         buttonPanel.add(btnAdd);
-        buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        buttonPanel.add(Box.createRigidArea(new Dimension(0, 15)));
         buttonPanel.add(btnRemove);
         buttonPanel.add(Box.createVerticalGlue());
 
@@ -99,13 +175,28 @@ public class OrderView extends JFrame {
         centerPanel.add(rightPanel);
 
         // Alt panel
-        JPanel bottomPanel = new JPanel(new BorderLayout(5, 5));
-        bottomPanel.setOpaque(false); // Şeffaf panel
+        JPanel bottomPanel = new JPanel(new BorderLayout(10, 10));
+        bottomPanel.setOpaque(false);
+        bottomPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        
         statusLabel = new JLabel(" ");
-        statusLabel.setFont(new Font("Arial", Font.BOLD, 16)); // Büyük ve kalın yazı tipi
-        btnSubmit = new JButton("Siparişi Oluştur");
-        btnSubmit.setFont(new Font("Arial", Font.BOLD, 16)); // Büyük ve kalın yazı tipi
-        bottomPanel.add(statusLabel, BorderLayout.CENTER);
+        statusLabel.setFont(new Font("Segoe UI", Font.ITALIC, 14));
+        statusLabel.setForeground(new Color(127, 140, 141));
+        
+        btnSubmit = new JButton("✅ Siparişi Oluştur");
+        btnSubmit.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        btnSubmit.setBackground(SUCCESS_COLOR);
+        btnSubmit.setForeground(Color.WHITE);
+        btnSubmit.setFocusPainted(false);
+        btnSubmit.setBorderPainted(false);
+        btnSubmit.setPreferredSize(new Dimension(220, 50));
+        btnSubmit.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        
+        JPanel statusPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        statusPanel.setOpaque(false);
+        statusPanel.add(statusLabel);
+        
+        bottomPanel.add(statusPanel, BorderLayout.CENTER);
         bottomPanel.add(btnSubmit, BorderLayout.EAST);
 
         // Ana panele ekle
@@ -118,20 +209,27 @@ public class OrderView extends JFrame {
         log.info("Sipariş arayüzü oluşturuldu");
     }
 
-    // Kahvaltı resmini eklemek için arka plan panel sınıfı
+    // Modern gradyan arka plan panel sınıfı
     static class BackgroundPanel extends JPanel {
-        private final Image backgroundImage;
-
-        public BackgroundPanel() {
-            // Kahvaltı resmini yükle
-            backgroundImage = new ImageIcon("src/main/java/com/grup7/IMG/chicken.png").getImage(); // Resim yolunuzu buraya ekleyin
-        }
-
+        private static final Color BACKGROUND_START = new Color(236, 240, 241);
+        private static final Color BACKGROUND_END = new Color(189, 195, 199);
+        
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
-            // Resmi tüm paneli dolduracak şekilde çiz
-            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+            
+            int w = getWidth();
+            int h = getHeight();
+            
+            // Modern gradyan arka plan
+            GradientPaint gp = new GradientPaint(
+                0, 0, BACKGROUND_START,
+                w, h, BACKGROUND_END
+            );
+            g2d.setPaint(gp);
+            g2d.fillRect(0, 0, w, h);
         }
     }
 
