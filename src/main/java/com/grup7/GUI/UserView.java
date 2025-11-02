@@ -26,10 +26,11 @@ public class UserView extends JFrame {
     private static final Color BACKGROUND_END = new Color(189, 195, 199);
 
     public UserView() {
-        setTitle("🍽️ Rezervasyon Sistemi");
-        setSize(600, 550);
+        setTitle("🍽️ Reservation System");
+        setSize(650, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        setResizable(true);
         setLayout(new BorderLayout(10, 10));
 
         // Modern gradyan arka plan paneli
@@ -41,7 +42,7 @@ public class UserView extends JFrame {
         JPanel headerPanel = new JPanel();
         headerPanel.setOpaque(false);
         headerPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 20));
-        JLabel titleLabel = new JLabel("Rezervasyon Oluştur", SwingConstants.CENTER);
+        JLabel titleLabel = new JLabel("Create Reservation", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 32));
         titleLabel.setForeground(new Color(44, 62, 80));
         headerPanel.add(titleLabel);
@@ -60,8 +61,8 @@ public class UserView extends JFrame {
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.anchor = GridBagConstraints.WEST;
 
-        // İsim alanı
-        JLabel nameLabel = new JLabel("📝 İsim:");
+        // Name field
+        JLabel nameLabel = new JLabel("📝 Name:");
         nameLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
         nameLabel.setForeground(new Color(44, 62, 80));
         gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 1;
@@ -74,11 +75,13 @@ public class UserView extends JFrame {
             BorderFactory.createEmptyBorder(8, 10, 8, 10)
         ));
         nameField.setPreferredSize(new Dimension(250, 35));
+        nameField.setOpaque(true);
+        nameField.setBackground(Color.WHITE);
         gbc.gridx = 1; gbc.fill = GridBagConstraints.HORIZONTAL;
         formPanel.add(nameField, gbc);
 
-        // Soyisim alanı
-        JLabel surnameLabel = new JLabel("📝 Soyisim:");
+        // Surname field
+        JLabel surnameLabel = new JLabel("📝 Surname:");
         surnameLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
         surnameLabel.setForeground(new Color(44, 62, 80));
         gbc.gridx = 0; gbc.gridy = 1; gbc.fill = GridBagConstraints.NONE;
@@ -91,11 +94,13 @@ public class UserView extends JFrame {
             BorderFactory.createEmptyBorder(8, 10, 8, 10)
         ));
         surnameField.setPreferredSize(new Dimension(250, 35));
+        surnameField.setOpaque(true);
+        surnameField.setBackground(Color.WHITE);
         gbc.gridx = 1; gbc.fill = GridBagConstraints.HORIZONTAL;
         formPanel.add(surnameField, gbc);
 
-        // Tarih seçimi
-        JLabel dateLabel = new JLabel("📅 Tarih:");
+        // Date selection
+        JLabel dateLabel = new JLabel("📅 Date:");
         dateLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
         dateLabel.setForeground(new Color(44, 62, 80));
         gbc.gridx = 0; gbc.gridy = 2; gbc.fill = GridBagConstraints.NONE;
@@ -141,8 +146,8 @@ public class UserView extends JFrame {
         gbc.gridx = 1; gbc.fill = GridBagConstraints.HORIZONTAL;
         formPanel.add(datePanel, gbc);
 
-        // Rezervasyon kodu ve kopyalama butonu paneli
-        JLabel reservationLabel = new JLabel("🎫 Rezervasyon Kodunuz:");
+        // Reservation code and copy button panel
+        JLabel reservationLabel = new JLabel("🎫 Your Reservation Code:");
         reservationLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
         reservationLabel.setForeground(new Color(44, 62, 80));
         gbc.gridx = 0; gbc.gridy = 3; gbc.fill = GridBagConstraints.NONE;
@@ -151,17 +156,19 @@ public class UserView extends JFrame {
         JPanel reservationPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
         reservationPanel.setOpaque(false);
 
-        reservationCodeLabel = new JLabel("Henüz rezervasyon yapılmadı");
+        reservationCodeLabel = new JLabel("No reservation made yet");
         reservationCodeLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
         reservationCodeLabel.setForeground(new Color(52, 152, 219));
         reservationCodeLabel.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createLineBorder(new Color(52, 152, 219), 2),
             BorderFactory.createEmptyBorder(10, 15, 10, 15)
         ));
+        reservationCodeLabel.setOpaque(true);
+        reservationCodeLabel.setBackground(Color.WHITE);
         reservationPanel.add(reservationCodeLabel);
 
-        // Kopyalama butonu
-        copyButton = new JButton("📋 Kopyala");
+        // Copy button with hover effects
+        copyButton = new JButton("📋 Copy");
         copyButton.setEnabled(false);
         copyButton.setFont(new Font("Segoe UI", Font.BOLD, 14));
         copyButton.setBackground(SECONDARY_COLOR);
@@ -170,6 +177,26 @@ public class UserView extends JFrame {
         copyButton.setBorderPainted(false);
         copyButton.setPreferredSize(new Dimension(120, 40));
         copyButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        copyButton.setToolTipText("Copy reservation code to clipboard");
+        // Add hover effect
+        copyButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                if (copyButton.isEnabled()) {
+                    copyButton.setBackground(new Color(
+                        Math.min(255, SECONDARY_COLOR.getRed() + 20),
+                        Math.min(255, SECONDARY_COLOR.getGreen() + 20),
+                        Math.min(255, SECONDARY_COLOR.getBlue() + 20)
+                    ));
+                }
+            }
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                if (copyButton.isEnabled()) {
+                    copyButton.setBackground(SECONDARY_COLOR);
+                }
+            }
+        });
         reservationPanel.add(copyButton);
 
         gbc.gridx = 1; gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -183,7 +210,7 @@ public class UserView extends JFrame {
         buttonPanel.setOpaque(false);
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 20, 10));
         
-        submitButton = new JButton("✅ Rezervasyon Yap");
+        submitButton = new JButton("✅ Make Reservation");
         submitButton.setFont(new Font("Segoe UI", Font.BOLD, 18));
         submitButton.setBackground(PRIMARY_COLOR);
         submitButton.setForeground(Color.WHITE);
@@ -191,6 +218,22 @@ public class UserView extends JFrame {
         submitButton.setBorderPainted(false);
         submitButton.setPreferredSize(new Dimension(250, 50));
         submitButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        submitButton.setToolTipText("Create a new reservation");
+        // Add hover effect
+        submitButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                submitButton.setBackground(new Color(
+                    Math.min(255, PRIMARY_COLOR.getRed() + 20),
+                    Math.min(255, PRIMARY_COLOR.getGreen() + 20),
+                    Math.min(255, PRIMARY_COLOR.getBlue() + 20)
+                ));
+            }
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                submitButton.setBackground(PRIMARY_COLOR);
+            }
+        });
         buttonPanel.add(submitButton);
 
         backgroundPanel.add(buttonPanel, BorderLayout.SOUTH);
@@ -265,7 +308,7 @@ public class UserView extends JFrame {
     }
 
     public void resetReservationCode() {
-        reservationCodeLabel.setText("Kod alınamadı");
+        reservationCodeLabel.setText("Code could not be retrieved");
         copyButton.setEnabled(false);
     }
 
@@ -278,19 +321,19 @@ public class UserView extends JFrame {
     }
 
     public void showSuccessMessage(String message) {
-        JOptionPane.showMessageDialog(this, message, "Başarılı", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, message, "Success", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void showErrorMessage(String message) {
-        JOptionPane.showMessageDialog(this, message, "Hata", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     public void showWarningMessage(String message) {
-        JOptionPane.showMessageDialog(this, message, "Uyarı", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(this, message, "Warning", JOptionPane.WARNING_MESSAGE);
     }
 
     public boolean showConfirmDialog(String message) {
-        return JOptionPane.showConfirmDialog(this, message, "Onay", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+        return JOptionPane.showConfirmDialog(this, message, "Confirm", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
     }
 
     public void copyToClipboard(String text) {
@@ -301,12 +344,12 @@ public class UserView extends JFrame {
 
     public void showCopyAnimation() {
         copyButton.setBackground(SUCCESS_COLOR);
-        copyButton.setText("✅ Kopyalandı!");
+        copyButton.setText("✅ Copied!");
 
-        // 2 saniye sonra butonu sıfırla
+        // Reset button after 2 seconds
         Timer timer = new Timer(2000, e -> {
             copyButton.setBackground(SECONDARY_COLOR);
-            copyButton.setText("📋 Kopyala");
+            copyButton.setText("📋 Copy");
         });
         timer.setRepeats(false);
         timer.start();

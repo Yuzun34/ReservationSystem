@@ -11,19 +11,19 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-// Loglama için Slf4j ve zorunlu constructor için RequiredArgsConstructor kullanıyoruz
+// Logging using Slf4j and RequiredArgsConstructor for required constructor
 @Slf4j
 @RequiredArgsConstructor
 public class UserGUIController {
-    // MVC yapısı için gerekli model ve view referansları
+    // Model and view references required for MVC structure
     private final UserModel model;
     private final UserView view;
     
-    // Mevcut rezervasyon kodu ve kullanıcı ID'si için setter'lı alanlar
+    // Setter fields for current reservation code and user ID
     @Setter private String currentReservationCode;
     @Setter private Long currentUserId;
 
-    // Controller başlatma metodu - Event listener'ları ekler
+    // Controller initialization method - adds event listeners
     public void initController() {
         view.addSubmitButtonListener(e -> addUser());
         view.addCopyButtonListener(e -> {
@@ -32,132 +32,180 @@ public class UserGUIController {
         });
     }
 
-    // Sipariş GUI'sini açan metod
+    // Open order GUI method
     private void openOrderGUI() {
         EventQueue.invokeLater(() -> {
             try {
                 OrderGUI.startGUI();
-                // Rezervasyon kodunu aktarmak için 500ms bekleyen zamanlayıcı
+                // Timer to transfer reservation code after 500ms
                 Timer timer = new Timer(500, e -> {
                     OrderView orderView = OrderGUI.getOrderView();
                     if (orderView != null && currentReservationCode != null) {
                         orderView.setReservationCode(currentReservationCode);
-                        log.info("Sipariş ekranına rezervasyon kodu aktarıldı: {}", currentReservationCode);
+                        log.info("Reservation code transferred to order screen: {}", currentReservationCode);
                     }
                 });
                 timer.setRepeats(false);
                 timer.start();
             } catch (Exception e) {
-                log.error("Sipariş ekranı açılırken hata", e);
-                view.showErrorMessage("Sipariş ekranı açılırken bir hata oluştu: " + e.getMessage());
+                log.error("Error opening order screen", e);
+                view.showErrorMessage("Error opening order screen: " + e.getMessage());
             }
         });
     }
 
-    // Yeni kullanıcı ekleme metodu
+    // Add new user method
     private void addUser() {
-        try {
-            // Form verilerini al
-            String name = view.getName();
-            String surname = view.getSurname();
-            String date = view.getSelectedDate();
+        // Run in background thread to avoid blocking UI
+        SwingWorker<Void, Void> worker = new SwingWorker<>() {
+            @Override
+            protected Void doInBackground() {
+                try {
+                    // Get form data
+                    String name = view.getName();
+                    String surname = view.getSurname();
+                    String date = view.getSelectedDate();
 
-            // Model'i güncelle
-            model.setName(name);
-            model.setSurname(surname);
-            model.setDate(date);
+                    // Validate input
+                    if (name == null || name.trim().isEmpty()) {
+                        SwingUtilities.invokeLater(() -> 
+                            view.showErrorMessage("Please enter your name"));
+                        return null;
+                    }
+                    if (surname == null || surname.trim().isEmpty()) {
+                        SwingUtilities.invokeLater(() -> 
+                            view.showErrorMessage("Please enter your surname"));
+                        return null;
+                    }
 
-            log.info("Yeni rezervasyon isteği: {} {} için {}", name, surname, date);
+                    // Update model
+                    model.setName(name);
+                    model.setSurname(surname);
+                    model.setDate(date);
 
-            // JSON isteği oluştur
-            String jsonBody = String.format("""
-                {
-                    "name": "%s",
-                    "surname": "%s",
-                    "date": "%s"
-                }""",
-                    name,
-                    surname,
-                    date
-            );
+                    log.info("New reservation request: {} {} for {}", name, surname, date);
 
-            // HTTP isteği gönder
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("http://localhost:8080/rest/api/users/add"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
-                    .build();
-
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-            // Yanıtı işle
-            if (response.statusCode() == 201 || response.statusCode() == 200) {
-                String responseBody = response.body();
-                currentReservationCode = extractReservationCode(responseBody);
-                currentUserId = extractUserId(responseBody);
-
-                if (currentReservationCode != null) {
-                    // Rezervasyon başarılı
-                    model.setReservationCode(currentReservationCode);
-                    view.setReservationCode(currentReservationCode);
-                    view.showSuccessMessage(
-                            "Rezervasyon başarıyla oluşturuldu!\nRezarvasyon Kodunuz: " + currentReservationCode +
-                                    "\n(Kopyalamak için 'Kopyala' butonunu kullanabilirsiniz)"
+                    // Create JSON request
+                    String jsonBody = String.format("""
+                        {
+                            "name": "%s",
+                            "surname": "%s",
+                            "date": "%s"
+                        }""",
+                            name.trim(),
+                            surname.trim(),
+                            date
                     );
-                    log.info("Rezervasyon başarıyla oluşturuldu. Kod: {}", currentReservationCode);
-                } else {
-                    // Rezervasyon kodu alınamadı
-                    view.resetReservationCode();
-                    view.showWarningMessage("Rezervasyon oluşturuldu fakat kod alınamadı.");
-                    log.warn("Rezervasyon oluşturuldu fakat kod alınamadı");
+
+                    // Send HTTP request
+                    HttpClient client = HttpClient.newHttpClient();
+                    HttpRequest request = HttpRequest.newBuilder()
+                            .uri(URI.create("http://localhost:8080/rest/api/users/add"))
+                            .header("Content-Type", "application/json")
+                            .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+                            .build();
+
+                    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+                    // Process response
+                    final int statusCode = response.statusCode();
+                    final String responseBody = response.body();
+                    
+                    SwingUtilities.invokeLater(() -> {
+                        if (statusCode == 201 || statusCode == 200) {
+                            String reservationCode = extractReservationCode(responseBody);
+                            Long userId = extractUserId(responseBody);
+
+                            if (reservationCode != null && !reservationCode.isEmpty()) {
+                                // Reservation successful
+                                currentReservationCode = reservationCode;
+                                currentUserId = userId;
+                                model.setReservationCode(reservationCode);
+                                view.setReservationCode(reservationCode);
+                                view.showSuccessMessage(
+                                        "Reservation created successfully!\nYour Reservation Code: " + reservationCode +
+                                                "\n(You can use the 'Copy' button to copy it)"
+                                );
+                                log.info("Reservation created successfully. Code: {}", reservationCode);
+                                // Don't clear form - let user see the reservation code
+                            } else {
+                                // Reservation code could not be retrieved
+                                view.resetReservationCode();
+                                view.showWarningMessage("Reservation created but code could not be retrieved.");
+                                log.warn("Reservation created but code could not be retrieved");
+                                view.clearForm();
+                            }
+                        } else {
+                            // Error state
+                            view.showErrorMessage(
+                                    "Error: Reservation could not be created!\nStatus Code: " + statusCode +
+                                            "\nResponse: " + responseBody
+                            );
+                            log.error("Reservation could not be created. Status: {}, Response: {}",
+                                    statusCode, responseBody);
+                        }
+                    });
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    SwingUtilities.invokeLater(() -> {
+                        view.showErrorMessage("Request was interrupted. Please try again.");
+                        log.error("Request interrupted", e);
+                    });
+                } catch (Exception ex) {
+                    SwingUtilities.invokeLater(() -> {
+                        log.error("Error creating reservation", ex);
+                        String errorMsg = ex.getMessage();
+                        if (errorMsg == null || errorMsg.isEmpty()) {
+                            errorMsg = "Unable to connect to server. Please ensure the server is running on port 8080.";
+                        }
+                        view.showErrorMessage("Error: " + errorMsg);
+                    });
                 }
-                view.clearForm();
-            } else {
-                // Hata durumu
-                view.showErrorMessage(
-                        "Hata: Rezervasyon oluşturulamadı!\nStatus Code: " + response.statusCode() +
-                                "\nResponse: " + response.body()
-                );
-                log.error("Rezervasyon oluşturulamadı. Status: {}, Response: {}",
-                        response.statusCode(), response.body());
+                return null;
             }
-        } catch (Exception ex) {
-            log.error("Rezervasyon oluşturulurken hata", ex);
-            view.showErrorMessage("Hata: " + ex.getMessage());
-        }
+        };
+        worker.execute();
     }
 
-    // Rezervasyon kodunu panoya kopyalama
+    // Copy reservation code to clipboard
     private void copyReservationCode() {
         if (currentReservationCode != null && !currentReservationCode.isEmpty()) {
             view.copyToClipboard(currentReservationCode);
             view.showCopyAnimation();
-            log.info("Rezervasyon kodu panoya kopyalandı: {}", currentReservationCode);
+            log.info("Reservation code copied to clipboard: {}", currentReservationCode);
         }
     }
 
-    // JSON yanıtından rezervasyon kodunu çıkarma
+    // Extract reservation code from JSON response
     private String extractReservationCode(String responseBody) {
         try {
             int startIndex = responseBody.indexOf("\"reservationCode\":\"") + "\"reservationCode\":\"".length();
             int endIndex = responseBody.indexOf("\"", startIndex);
-            return responseBody.substring(startIndex, endIndex);
+            if (startIndex > "\"reservationCode\":\"".length() && endIndex > startIndex) {
+                return responseBody.substring(startIndex, endIndex);
+            }
+            return null;
         } catch (Exception e) {
-            log.error("Rezervasyon kodu çıkarılırken hata", e);
+            log.error("Error extracting reservation code", e);
             return null;
         }
     }
 
-    // JSON yanıtından kullanıcı ID'sini çıkarma
+    // Extract user ID from JSON response
     private Long extractUserId(String responseBody) {
         try {
             int startIndex = responseBody.indexOf("\"id\":") + "\"id\":".length();
             int endIndex = responseBody.indexOf(",", startIndex);
-            String idStr = responseBody.substring(startIndex, endIndex).trim();
-            return Long.parseLong(idStr);
+            if (endIndex == -1) {
+                endIndex = responseBody.indexOf("}", startIndex);
+            }
+            if (startIndex > "\"id\":".length() && endIndex > startIndex) {
+                String idStr = responseBody.substring(startIndex, endIndex).trim();
+                return Long.parseLong(idStr);
+            }
+            return null;
         } catch (Exception e) {
-            log.error("Kullanıcı ID'si çıkarılırken hata", e);
+            log.error("Error extracting user ID", e);
             return null;
         }
     }

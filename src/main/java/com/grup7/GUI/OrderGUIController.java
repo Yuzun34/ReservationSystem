@@ -25,20 +25,20 @@ public class OrderGUIController {
     private final RestTemplate restTemplate;
 
     public void initController() {
-        // RestTemplate'i dönüştürücülerle başlat
+        // Initialize RestTemplate with converters
         List<HttpMessageConverter<?>> converters = new ArrayList<>();
         converters.add(new MappingJackson2HttpMessageConverter());
         restTemplate.setMessageConverters(converters);
 
-        // Olay dinleyicilerini ekle
+        // Add event listeners
         view.addAddButtonListener(e -> addSelectedCategories());
         view.addRemoveButtonListener(e -> removeSelectedCategories());
         view.addSubmitButtonListener(e -> submitOrder());
 
-        // Başlangıçta kategorileri yükle
+        // Load categories on startup
         loadCategories();
 
-        log.info("OrderController başlatıldı");
+        log.info("OrderController initialized successfully");
     }
 
     private void loadCategories() {
@@ -46,8 +46,8 @@ public class OrderGUIController {
             @Override
             protected List<Category> doInBackground() {
                 try {
-                    view.setStatusMessage("Kategoriler yükleniyor...");
-                    log.info("Kategoriler yükleniyor...");
+                    view.setStatusMessage("Loading categories...");
+                    log.info("Loading categories...");
 
                     // ResponseEntity kullanarak kategorileri Category[] dizisi olarak al
                     ResponseEntity<Category[]> response = restTemplate.getForEntity(
@@ -57,9 +57,9 @@ public class OrderGUIController {
 
                     return Arrays.asList(response.getBody());
                 } catch (Exception e) {
-                    log.error("Kategoriler yüklenirken hata oluştu", e);
+                    log.error("Error loading categories", e);
                     SwingUtilities.invokeLater(() ->
-                            view.showErrorMessage("Kategoriler yüklenirken hata oluştu: " + e.getMessage())
+                            view.showErrorMessage("Error loading categories: " + e.getMessage())
                     );
                     return new ArrayList<>();
                 }
@@ -72,7 +72,7 @@ public class OrderGUIController {
                     model.getCategoryNameToIdMap().clear();
 
                     if (categories != null && !categories.isEmpty()) {
-                        // Kategori isimlerini ve ID'lerini model haritasına ekle
+                        // Add category names and IDs to model map
                         for (Category category : categories) {
                             if (category != null && category.getStrCategory() != null) {
                                 model.getCategoryNameToIdMap().put(
@@ -82,22 +82,22 @@ public class OrderGUIController {
                             }
                         }
 
-                        // Görünümü kategori isimleriyle güncelle
+                        // Update view with category names
                         List<String> categoryNames = categories.stream()
                                 .filter(c -> c != null && c.getStrCategory() != null)
                                 .map(Category::getStrCategory)
                                 .collect(Collectors.toList());
 
                         view.updateCategoryList(categoryNames);
-                        view.setStatusMessage("Kategoriler yüklendi");
-                        log.info("Kategoriler başarıyla yüklendi: {} adet kategori", categoryNames.size());
+                        view.setStatusMessage("Categories loaded");
+                        log.info("Categories loaded successfully: {} categories", categoryNames.size());
                     } else {
-                        view.setStatusMessage("Kategori bulunamadı");
-                        log.warn("Kategori bulunamadı");
+                        view.setStatusMessage("No categories found");
+                        log.warn("No categories found");
                     }
                 } catch (Exception e) {
-                    view.setStatusMessage("Hata: Kategoriler yüklenemedi");
-                    log.error("Kategoriler işlenirken hata oluştu", e);
+                    view.setStatusMessage("Error: Categories could not be loaded");
+                    log.error("Error processing categories", e);
                 }
             }
         };
@@ -113,7 +113,7 @@ public class OrderGUIController {
             }
         }
         view.clearSelection();
-        log.debug("Seçilen kategoriler eklendi: {}", selectedCategories);
+        log.debug("Selected categories added: {}", selectedCategories);
     }
 
     private void removeSelectedCategories() {
@@ -121,28 +121,28 @@ public class OrderGUIController {
         view.removeSelectedCategories();
         List<String> selectedCategoriesAfter = view.getSelectedCategoriesFromModel();
 
-        // Modeli güncelle
+        // Update model
         model.setSelectedCategories(selectedCategoriesAfter);
-        log.debug("Kategoriler kaldırıldı. Kalan: {}", selectedCategoriesAfter.size());
+        log.debug("Categories removed. Remaining: {}", selectedCategoriesAfter.size());
     }
 
     private void submitOrder() {
         String reservationCode = view.getReservationCode();
         if (reservationCode.isEmpty()) {
-            view.showErrorMessage("Lütfen rezervasyon kodunu giriniz");
+            view.showErrorMessage("Please enter reservation code");
             return;
         }
 
         if (model.getSelectedCategories().isEmpty()) {
-            view.showErrorMessage("Lütfen en az bir kategori seçiniz");
+            view.showErrorMessage("Please select at least one category");
             return;
         }
 
-        // Siparişi oluştur
+        // Create order
         OrderDto orderDto = new OrderDto();
         orderDto.setReservationCode(reservationCode);
 
-        // Kategori isimlerinden ID'leri al
+        // Get category IDs from category names
         List<String> selectedCategoryIds = new ArrayList<>();
         for (String categoryName : model.getSelectedCategories()) {
             String categoryId = model.getCategoryNameToIdMap().get(categoryName);
@@ -152,7 +152,7 @@ public class OrderGUIController {
         }
         orderDto.setCategoryIds(selectedCategoryIds);
 
-        // Siparişi kaydet
+        // Save order
         saveOrder(orderDto);
     }
 
@@ -161,11 +161,11 @@ public class OrderGUIController {
             @Override
             protected Boolean doInBackground() {
                 try {
-                    view.setStatusMessage("Sipariş kaydediliyor...");
-                    log.info("Sipariş kaydediliyor: {} rezervasyon kodu için {} kategori",
-                            orderDto.getReservationCode(), orderDto.getCategoryIds().size());
+                    view.setStatusMessage("Saving order...");
+                    log.info("Saving order: {} categories for reservation code {}",
+                            orderDto.getCategoryIds().size(), orderDto.getReservationCode());
 
-                    // RestTemplate ile POST isteği
+                    // POST request with RestTemplate
                     ResponseEntity<OrderDto> response = restTemplate.postForEntity(
                             "http://localhost:8080/rest/api/orders/save",
                             orderDto,
@@ -174,9 +174,9 @@ public class OrderGUIController {
 
                     return response.getStatusCode().is2xxSuccessful();
                 } catch (Exception e) {
-                    log.error("Sipariş kaydedilirken hata oluştu", e);
+                    log.error("Error saving order", e);
                     SwingUtilities.invokeLater(() ->
-                            view.showErrorMessage("Sipariş kaydedilirken hata oluştu: " + e.getMessage())
+                            view.showErrorMessage("Error saving order: " + e.getMessage())
                     );
                     return false;
                 }
@@ -187,18 +187,18 @@ public class OrderGUIController {
                 try {
                     boolean success = get();
                     if (success) {
-                        view.setStatusMessage("Sipariş başarıyla kaydedildi");
-                        view.showSuccessMessage("Sipariş başarıyla oluşturuldu");
+                        view.setStatusMessage("Order saved successfully");
+                        view.showSuccessMessage("Order created successfully");
                         view.clearForm();
                         model.getSelectedCategories().clear();
-                        log.info("Sipariş başarıyla kaydedildi");
+                        log.info("Order saved successfully");
                     } else {
-                        view.setStatusMessage("Sipariş kaydedilemedi");
-                        log.warn("Sipariş kaydedilemedi");
+                        view.setStatusMessage("Order could not be saved");
+                        log.warn("Order could not be saved");
                     }
                 } catch (Exception e) {
-                    view.setStatusMessage("Hata oluştu");
-                    log.error("Sipariş işleminde beklenmeyen hata", e);
+                    view.setStatusMessage("An error occurred");
+                    log.error("Unexpected error in order processing", e);
                 }
             }
         };

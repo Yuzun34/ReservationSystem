@@ -31,11 +31,12 @@ public class OrderView extends JFrame {
     private static final Color BACKGROUND_END = new Color(189, 195, 199);
 
     public OrderView() {
-        // Form ayarları
-        setTitle("🛒 Sipariş Oluştur");
-        setSize(900, 700);
+        // Form settings
+        setTitle("🛒 Create Order");
+        setSize(950, 750);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        setResizable(true);
 
         // Modern gradyan arka plan paneli
         BackgroundPanel mainPanel = new BackgroundPanel();
@@ -46,7 +47,7 @@ public class OrderView extends JFrame {
         JPanel headerPanel = new JPanel();
         headerPanel.setOpaque(false);
         headerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 20, 10));
-        JLabel titleLabel = new JLabel("Sipariş Oluştur", SwingConstants.CENTER);
+        JLabel titleLabel = new JLabel("Create Order", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 32));
         titleLabel.setForeground(new Color(44, 62, 80));
         headerPanel.add(titleLabel);
@@ -58,7 +59,7 @@ public class OrderView extends JFrame {
         topPanel.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createTitledBorder(
                 BorderFactory.createLineBorder(PRIMARY_COLOR, 2),
-                "  Rezervasyon Bilgisi  ",
+                "  Reservation Information  ",
                 0, 0,
                 new Font("Segoe UI", Font.BOLD, 16),
                 PRIMARY_COLOR
@@ -66,7 +67,7 @@ public class OrderView extends JFrame {
             BorderFactory.createEmptyBorder(15, 15, 15, 15)
         ));
         
-        JLabel lblReservationCode = new JLabel("🎫 Rezervasyon Kodu:");
+        JLabel lblReservationCode = new JLabel("🎫 Reservation Code:");
         lblReservationCode.setFont(new Font("Segoe UI", Font.BOLD, 16));
         lblReservationCode.setForeground(new Color(44, 62, 80));
         
@@ -77,6 +78,8 @@ public class OrderView extends JFrame {
             BorderFactory.createEmptyBorder(10, 12, 10, 12)
         ));
         txtReservationCode.setPreferredSize(new Dimension(300, 40));
+        txtReservationCode.setOpaque(true);
+        txtReservationCode.setBackground(Color.WHITE);
         
         JPanel codeInputPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
         codeInputPanel.setOpaque(false);
@@ -95,7 +98,7 @@ public class OrderView extends JFrame {
         leftPanel.setOpaque(false);
         leftPanel.setBorder(BorderFactory.createTitledBorder(
             BorderFactory.createLineBorder(PRIMARY_COLOR, 2),
-            "  Mevcut Kategoriler  ",
+            "  Available Categories  ",
             0, 0,
             new Font("Segoe UI", Font.BOLD, 16),
             PRIMARY_COLOR
@@ -119,7 +122,7 @@ public class OrderView extends JFrame {
         rightPanel.setOpaque(false);
         rightPanel.setBorder(BorderFactory.createTitledBorder(
             BorderFactory.createLineBorder(SECONDARY_COLOR, 2),
-            "  Seçilen Kategoriler  ",
+            "  Selected Categories  ",
             0, 0,
             new Font("Segoe UI", Font.BOLD, 16),
             SECONDARY_COLOR
@@ -142,7 +145,7 @@ public class OrderView extends JFrame {
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         buttonPanel.setOpaque(false);
 
-        btnAdd = new JButton("➡️ Ekle");
+        btnAdd = new JButton("➡️ Add");
         btnAdd.setFont(new Font("Segoe UI", Font.BOLD, 16));
         btnAdd.setBackground(PRIMARY_COLOR);
         btnAdd.setForeground(Color.WHITE);
@@ -150,15 +153,48 @@ public class OrderView extends JFrame {
         btnAdd.setBorderPainted(false);
         btnAdd.setPreferredSize(new Dimension(120, 45));
         btnAdd.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnAdd.setToolTipText("Add selected categories to order");
+        // Add hover effect
+        btnAdd.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnAdd.setBackground(new Color(
+                    Math.min(255, PRIMARY_COLOR.getRed() + 20),
+                    Math.min(255, PRIMARY_COLOR.getGreen() + 20),
+                    Math.min(255, PRIMARY_COLOR.getBlue() + 20)
+                ));
+            }
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnAdd.setBackground(PRIMARY_COLOR);
+            }
+        });
         
-        btnRemove = new JButton("⬅️ Çıkar");
+        Color removeColor = new Color(231, 76, 60);
+        btnRemove = new JButton("⬅️ Remove");
         btnRemove.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        btnRemove.setBackground(new Color(231, 76, 60));
+        btnRemove.setBackground(removeColor);
         btnRemove.setForeground(Color.WHITE);
         btnRemove.setFocusPainted(false);
         btnRemove.setBorderPainted(false);
         btnRemove.setPreferredSize(new Dimension(120, 45));
         btnRemove.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnRemove.setToolTipText("Remove selected categories from order");
+        // Add hover effect
+        btnRemove.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnRemove.setBackground(new Color(
+                    Math.min(255, removeColor.getRed() + 20),
+                    Math.min(255, removeColor.getGreen() + 20),
+                    Math.min(255, removeColor.getBlue() + 20)
+                ));
+            }
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnRemove.setBackground(removeColor);
+            }
+        });
 
         // Butonları ortala
         btnAdd.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -183,7 +219,7 @@ public class OrderView extends JFrame {
         statusLabel.setFont(new Font("Segoe UI", Font.ITALIC, 14));
         statusLabel.setForeground(new Color(127, 140, 141));
         
-        btnSubmit = new JButton("✅ Siparişi Oluştur");
+        btnSubmit = new JButton("✅ Create Order");
         btnSubmit.setFont(new Font("Segoe UI", Font.BOLD, 18));
         btnSubmit.setBackground(SUCCESS_COLOR);
         btnSubmit.setForeground(Color.WHITE);
@@ -191,6 +227,22 @@ public class OrderView extends JFrame {
         btnSubmit.setBorderPainted(false);
         btnSubmit.setPreferredSize(new Dimension(220, 50));
         btnSubmit.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnSubmit.setToolTipText("Create order with selected categories");
+        // Add hover effect
+        btnSubmit.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnSubmit.setBackground(new Color(
+                    Math.min(255, SUCCESS_COLOR.getRed() + 20),
+                    Math.min(255, SUCCESS_COLOR.getGreen() + 20),
+                    Math.min(255, SUCCESS_COLOR.getBlue() + 20)
+                ));
+            }
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnSubmit.setBackground(SUCCESS_COLOR);
+            }
+        });
         
         JPanel statusPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         statusPanel.setOpaque(false);
@@ -206,7 +258,7 @@ public class OrderView extends JFrame {
 
         add(mainPanel);
 
-        log.info("Sipariş arayüzü oluşturuldu");
+        log.info("Order interface created successfully");
     }
 
     // Modern gradyan arka plan panel sınıfı
@@ -252,7 +304,7 @@ public class OrderView extends JFrame {
         for (String category : categories) {
             categoryListModel.addElement(category);
         }
-        log.info("Kategori listesi güncellendi: {} adet kategori yüklendi", categories.size());
+        log.info("Category list updated: {} categories loaded", categories.size());
     }
 
     public void addSelectedCategory(String category) {
@@ -303,17 +355,17 @@ public class OrderView extends JFrame {
         txtReservationCode.setText("");
         selectedListModel.clear();
         categoryList.clearSelection();
-        log.info("Form temizlendi");
+        log.info("Form cleared");
     }
 
-    // Mesaj pencereleri
+    // Message dialogs
     public void showErrorMessage(String message) {
-        JOptionPane.showMessageDialog(this, message, "Hata", JOptionPane.ERROR_MESSAGE);
-        log.error("Hata mesajı gösterildi: {}", message);
+        JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
+        log.error("Error message displayed: {}", message);
     }
 
     public void showSuccessMessage(String message) {
-        JOptionPane.showMessageDialog(this, message, "Başarılı", JOptionPane.INFORMATION_MESSAGE);
-        log.info("Başarı mesajı gösterildi: {}", message);
+        JOptionPane.showMessageDialog(this, message, "Success", JOptionPane.INFORMATION_MESSAGE);
+        log.info("Success message displayed: {}", message);
     }
 }

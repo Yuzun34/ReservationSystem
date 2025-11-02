@@ -1,6 +1,7 @@
-// Rezervasyon sisteminin ana uygulama sınıfı
+// Reservation System Main Application Class
 package com.grup7.ReservationSystem;
 
+import com.formdev.flatlaf.FlatLightLaf;
 import com.grup7.GUI.UserRegistrationGUI;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
@@ -13,38 +14,49 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import javax.swing.*;
 import java.awt.*;
 
-// Loglama için Lombok annotasyonu
+// Logging using Lombok annotation
 @Slf4j
-// Spring Boot uygulaması olduğunu belirtir
+// Spring Boot application annotation
 @SpringBootApplication
-// Spring bileşenlerinin taranacağı paket
+// Package to scan for Spring components
 @ComponentScan(basePackages = {"com.grup7"})
-// JPA varlıklarının bulunduğu paket
+// Package containing JPA entities
 @EntityScan(basePackages = {"com.grup7"})
-// JPA repository'lerinin bulunduğu paket
+// Package containing JPA repositories
 @EnableJpaRepositories(basePackages = {"com.grup7"})
 public class ReservationSystemApplication {
     public static void main(String[] args) {
-        // GUI uygulaması için headless modu kapatılıyor
+        // Disable headless mode for GUI application
         System.setProperty("java.awt.headless", "false");
         
-        // Sistemin görünümünü native görünüme ayarla
+        // Set modern FlatLaf look and feel
         try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            log.error("Look and feel ayarlanırken hata oluştu", e);
+            UIManager.setLookAndFeel(new FlatLightLaf());
+            log.info("FlatLaf modern UI theme applied successfully");
+        } catch (UnsupportedLookAndFeelException e) {
+            try {
+                // Fallback to system look and feel
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                log.warn("FlatLaf not available, using system look and feel");
+            } catch (Exception ex) {
+                log.error("Error setting look and feel", ex);
+            }
         }
         
-        // Spring uygulamasını başlat
+        // Start Spring application
         ConfigurableApplicationContext context = SpringApplication.run(ReservationSystemApplication.class, args);
 
-        // GUI'yi Event Dispatch Thread üzerinde başlat
+        // Start GUI on Event Dispatch Thread
         EventQueue.invokeLater(() -> {
             try {
                 UserRegistrationGUI.startGUI();
-                log.info("UserRegistrationGUI başlatıldı");
+                log.info("UserRegistrationGUI started successfully");
             } catch (Exception e) {
-                log.error("GUI başlatılırken hata oluştu", e);
+                log.error("Error starting GUI", e);
+                JOptionPane.showMessageDialog(null, 
+                    "Error starting GUI: " + e.getMessage(), 
+                    "Error", 
+                    JOptionPane.ERROR_MESSAGE);
             }
         });
     }
