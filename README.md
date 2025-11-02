@@ -72,7 +72,7 @@ A modern and user-friendly restaurant reservation management system. Developed u
 
 1. **Clone the project**
 ```bash
-git clone https://github.com/username/ReservationSystem.git
+git clone https://github.com/Yuzun34/ReservationSystem.git
 cd ReservationSystem
 ```
 
