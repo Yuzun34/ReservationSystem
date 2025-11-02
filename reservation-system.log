@@ -1,0 +1,77 @@
+2025-09-08 22:01:17 [main] INFO  c.g.R.ReservationSystemApplication - Starting ReservationSystemApplication using Java 17.0.12 with PID 18976 (C:\Users\Selahattin\Desktop\Masaüstü\ReservationSystem\target\classes started by Selahattin in C:\Users\Selahattin\Desktop\Masaüstü\ReservationSystem)
+2025-09-08 22:01:17 [main] INFO  c.g.R.ReservationSystemApplication - No active profile set, falling back to 1 default profile: "default"
+2025-09-08 22:01:18 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-09-08 22:01:18 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 56 ms. Found 4 JPA repository interfaces.
+2025-09-08 22:01:19 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-09-08 22:01:19 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-09-08 22:01:19 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.40]
+2025-09-08 22:01:19 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-09-08 22:01:19 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1568 ms
+2025-09-08 22:01:19 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-09-08 22:01:19 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:6f5effd3-8ebd-472f-ad30-0b7638c4741b user=SA
+2025-09-08 22:01:19 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-09-08 22:01:19 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-09-08 22:01:19 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.13.Final
+2025-09-08 22:01:19 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-09-08 22:01:20 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-09-08 22:01:20 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-09-08 22:01:21 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-09-08 22:01:21 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-09-08 22:01:22 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-09-08 22:01:22 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-09-08 22:01:22 [main] INFO  c.g.R.ReservationSystemApplication - Started ReservationSystemApplication in 5.538 seconds (process running for 7.265)
+2025-09-08 22:01:23 [AWT-EventQueue-0] INFO  c.g.R.ReservationSystemApplication - UserRegistrationGUI başlatıldı
+2025-09-08 22:01:33 [AWT-EventQueue-0] INFO  com.grup7.GUI.UserGUIController - Yeni rezervasyon isteği: asd asda için 03/01/2024
+2025-09-08 22:01:33 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-09-08 22:01:33 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-09-08 22:01:33 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-09-08 22:01:33 [http-nio-8080-exec-2] INFO  com.grup7.Controller.UserController - API İsteği: Kullanıcı ekleme - Ad=asd, Soyad=asda, Tarih=2024-01-03
+2025-09-08 22:01:33 [http-nio-8080-exec-2] INFO  com.grup7.Service.UserService - Yeni kullanıcı ekleme işlemi başlatıldı: Ad=asd, Soyad=asda, Tarih=2024-01-03
+2025-09-08 22:01:33 [http-nio-8080-exec-2] WARN  com.grup7.Service.UserService - Geçersiz rezervasyon tarihi (geçmiş tarih): 2024-01-03
+2025-09-08 22:01:36 [AWT-EventQueue-0] ERROR com.grup7.GUI.UserGUIController - Rezervasyon oluşturulamadı. Status: 400, Response: {"status":400,"message":"Rezervasyon için geçmiş tarih seçilemez","errors":null}
+2025-09-08 22:01:39 [AWT-EventQueue-0] INFO  com.grup7.GUI.UserGUIController - Yeni rezervasyon isteği: asd asda için 03/01/2026
+2025-09-08 22:01:39 [http-nio-8080-exec-1] INFO  com.grup7.Controller.UserController - API İsteği: Kullanıcı ekleme - Ad=asd, Soyad=asda, Tarih=2026-01-03
+2025-09-08 22:01:39 [http-nio-8080-exec-1] INFO  com.grup7.Service.UserService - Yeni kullanıcı ekleme işlemi başlatıldı: Ad=asd, Soyad=asda, Tarih=2026-01-03
+2025-09-08 22:01:39 [http-nio-8080-exec-1] INFO  com.grup7.Service.TableService - Tarih için uygun masalar aranıyor: 2026-01-03
+2025-09-08 22:01:39 [http-nio-8080-exec-1] INFO  com.grup7.Service.TableService - Bulunan uygun masa sayısı: 10 (Tarih: 2026-01-03)
+2025-09-08 22:01:39 [http-nio-8080-exec-1] INFO  com.grup7.Service.TableService - Masa rezervasyon işlemi başlatıldı: MasaID=1, Tarih=2026-01-03
+2025-09-08 22:01:39 [http-nio-8080-exec-1] INFO  com.grup7.Service.TableService - Masa başarıyla rezerve edildi: MasaID=1, Masa Numarası=Masa-1, Tarih=2026-01-03
+2025-09-08 22:01:39 [http-nio-8080-exec-1] INFO  com.grup7.Service.UserService - Kullanıcı başarıyla kaydedildi: ID=1, Ad=asd, Soyad=asda, RezervasyonKodu=RZ53-3d2ea496-1
+2025-09-08 22:01:39 [http-nio-8080-exec-1] INFO  com.grup7.Controller.UserController - API Yanıtı: Kullanıcı eklendi - ID=1, RezervasyonKodu=RZ53-3d2ea496-1
+2025-09-08 22:01:51 [AWT-EventQueue-0] INFO  com.grup7.GUI.UserGUIController - Rezervasyon başarıyla oluşturuldu. Kod: RZ53-3d2ea496-1
+2025-09-08 22:01:53 [AWT-EventQueue-0] INFO  com.grup7.GUI.UserGUIController - Rezervasyon kodu panoya kopyalandı: RZ53-3d2ea496-1
+2025-09-08 22:01:53 [AWT-EventQueue-0] INFO  com.grup7.GUI.OrderView - Sipariş arayüzü oluşturuldu
+2025-09-08 22:01:53 [AWT-EventQueue-0] INFO  com.grup7.GUI.OrderGUIController - OrderController başlatıldı
+2025-09-08 22:01:53 [SwingWorker-pool-3-thread-1] INFO  com.grup7.GUI.OrderGUIController - Kategoriler yükleniyor...
+2025-09-08 22:01:53 [SwingWorker-pool-3-thread-1] ERROR com.grup7.GUI.OrderGUIController - Kategoriler yüklenirken hata oluştu
+org.springframework.web.client.HttpServerErrorException$InternalServerError: 500  on GET request for "http://localhost:8080/rest/api/menu": "{"status":500,"message":"Beklenmeyen bir hata oluştu: I/O error on GET request for \"https://www.themealdb.com/api/json/v1/1/categories.php\": www.themealdb.com","errors":null}"
+	at org.springframework.web.client.HttpServerErrorException.create(HttpServerErrorException.java:102)
+	at org.springframework.web.client.DefaultResponseErrorHandler.handleError(DefaultResponseErrorHandler.java:189)
+	at org.springframework.web.client.DefaultResponseErrorHandler.handleError(DefaultResponseErrorHandler.java:147)
+	at org.springframework.web.client.RestTemplate.handleResponse(RestTemplate.java:953)
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:902)
+	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:801)
+	at org.springframework.web.client.RestTemplate.getForEntity(RestTemplate.java:442)
+	at com.grup7.GUI.OrderGUIController$1.doInBackground(OrderGUIController.java:53)
+	at com.grup7.GUI.OrderGUIController$1.doInBackground(OrderGUIController.java:45)
+	at java.desktop/javax.swing.SwingWorker$1.call(SwingWorker.java:304)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.desktop/javax.swing.SwingWorker.run(SwingWorker.java:343)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+2025-09-08 22:01:53 [AWT-EventQueue-0] WARN  com.grup7.GUI.OrderGUIController - Kategori bulunamadı
+2025-09-08 22:01:53 [AWT-EventQueue-0] INFO  com.grup7.GUI.UserGUIController - Sipariş ekranına rezervasyon kodu aktarıldı: RZ53-3d2ea496-1
+2025-09-08 22:01:57 [AWT-EventQueue-0] ERROR com.grup7.GUI.OrderView - Hata mesajı gösterildi: Kategoriler yüklenirken hata oluştu: 500  on GET request for "http://localhost:8080/rest/api/menu": "{"status":500,"message":"Beklenmeyen bir hata oluştu: I/O error on GET request for \"https://www.themealdb.com/api/json/v1/1/categories.php\": www.themealdb.com","errors":null}"
+2025-09-08 22:01:59 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-09-08 22:02:00 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-09-08 22:02:00 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-09-08 22:02:00 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-09-08 22:02:00 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.

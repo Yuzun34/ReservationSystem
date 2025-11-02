@@ -1,0 +1,332 @@
+{
+	"info": {
+		"_postman_id": "cecf25e6-38f9-4833-a9d6-e63fdfd94d63",
+		"name": "Rezervasyon Sistemi API",
+		"description": "Grup 7 Rezervasyon Sistemi için tüm API endpointleri",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14551936",
+		"_collection_link": "https://grup71.postman.co/workspace/Grup7-Workspace~4425dc71-3073-4583-8fd7-1119808e8042/collection/14551936-cecf25e6-38f9-4833-a9d6-e63fdfd94d63?action=share&source=collection_link&creator=14551936"
+	},
+	"item": [
+		{
+			"name": "Kullanıcı İşlemleri",
+			"item": [
+				{
+					"name": "Kullanıcı Ekle",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Yusuf\",\n  \"surname\": \"Uzun\",\n  \"date\": \"18/07/2025\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/rest/api/users/add",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rest",
+								"api",
+								"users",
+								"add"
+							]
+						},
+						"description": "Sisteme yeni bir kullanıcı ekler"
+					},
+					"response": []
+				},
+				{
+					"name": "Tüm Kullanıcıları Listele",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/rest/api/users/list",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rest",
+								"api",
+								"users",
+								"list"
+							]
+						},
+						"description": "Sistemdeki tüm kullanıcıları listeler"
+					},
+					"response": []
+				},
+				{
+					"name": "Kullanıcı Güncelle",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Yeni Ad\",\n  \"surname\": \"Yeni Soyad\",\n  \"date\": \"18/07/2025\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/rest/api/users/update/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rest",
+								"api",
+								"users",
+								"update",
+								"1"
+							]
+						},
+						"description": "Belirtilen ID'ye sahip kullanıcıyı günceller"
+					},
+					"response": []
+				},
+				{
+					"name": "Kullanıcı Sil",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/rest/api/users/delete/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rest",
+								"api",
+								"users",
+								"delete",
+								"1"
+							]
+						},
+						"description": "Belirtilen ID'ye sahip kullanıcıyı sistemden siler"
+					},
+					"response": []
+				}
+			],
+			"description": "Kullanıcı ekleme, silme, güncelleme ve listeleme endpointleri"
+		},
+		{
+			"name": "Kategori İşlemleri",
+			"item": [
+				{
+					"name": "Menü Kategorilerini Getir",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/rest/api/menu",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rest",
+								"api",
+								"menu"
+							]
+						},
+						"description": "Sistemdeki tüm menü kategorilerini getirir"
+					},
+					"response": []
+				}
+			],
+			"description": "Menü kategorilerini getiren endpoint"
+		},
+		{
+			"name": "E-posta İşlemleri",
+			"item": [
+				{
+					"name": "Log Dosyasını E-posta ile Gönder",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/rest/api/send-email?email=ornek@email.com",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rest",
+								"api",
+								"send-email"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "ornek@email.com"
+								}
+							]
+						},
+						"description": "Log dosyasını belirtilen e-posta adresine gönderir"
+					},
+					"response": []
+				}
+			],
+			"description": "E-posta gönderme işlemleri için endpointler"
+		},
+		{
+			"name": "Sipariş İşlemleri",
+			"item": [
+				{
+					"name": "Yeni Sipariş Oluştur",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"reservationCode\":\"RZ53-f4fea793-5\",\n    \"categoryIds\": [\"1\", \"4\", \"10\"]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/rest/api/orders/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rest",
+								"api",
+								"orders",
+								"save"
+							]
+						},
+						"description": "Yeni bir sipariş oluşturur"
+					},
+					"response": []
+				},
+				{
+					"name": "İd'ye Göre Sipariş Görüntüleme",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/rest/api/orders/RZ53-f4fea793-5",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rest",
+								"api",
+								"orders",
+								"RZ53-f4fea793-5"
+							]
+						},
+						"description": "Sistemdeki tüm siparişleri listeler"
+					},
+					"response": []
+				}
+			],
+			"description": "Sipariş ekleme, güncelleme, silme ve listeleme endpointleri"
+		},
+		{
+			"name": "Sipariş Log İşlemleri",
+			"item": [
+				{
+					"name": "Hesap Kapatma Ve Log Oluşturma",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/rest/api/orders/close/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"rest",
+								"api",
+								"orders",
+								"close",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Sipariş logları ile ilgili işlemler"
+		},
+		{
+			"name": "Masa İşlemleri",
+			"item": [
+				{
+					"name": "Tüm Masaları Listele",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/rest/api/tables",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rest",
+								"api",
+								"tables"
+							]
+						},
+						"description": "Sistemdeki tüm masaları listeler"
+					},
+					"response": []
+				}
+			],
+			"description": "Masa ekleme, güncelleme, silme ve listeleme endpointleri"
+		},
+		{
+			"name": "Rapor İşlemleri",
+			"item": [
+				{
+					"name": "Aylık Doluluk Raporu",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/rest/api/reports/2025/7",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rest",
+								"api",
+								"reports",
+								"2025",
+								"7"
+							]
+						},
+						"description": "Aylık satış raporunu getirir"
+					},
+					"response": []
+				}
+			],
+			"description": "Çeşitli raporlar için endpointler"
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}

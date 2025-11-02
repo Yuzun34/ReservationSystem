@@ -1,0 +1,16 @@
+----------------------------------------
+Rezervasyon Kapandı
+Current Date and Time (UTC): 2025-05-18 15:30:58
+Müşteri: Selahattin Alper Özdoğan
+Masa Numarası: Masa-1
+Rezervasyon Kodu: RZ53-6c3f82c0-7
+----------------------------------------
+
+----------------------------------------
+Rezervasyon Kapandı
+Current Date and Time (UTC): 2025-05-22 10:36:47
+Müşteri: asd asd
+Masa Numarası: Masa-1
+Rezervasyon Kodu: RZ53-722a65aa-6
+----------------------------------------
+
