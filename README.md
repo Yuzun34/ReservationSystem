@@ -1,112 +1,112 @@
-# 🍽️ Rezervasyon Sistemi
+# 🍽️ Reservation System
 
-Modern ve kullanıcı dostu bir restoran rezervasyon yönetim sistemi. Spring Boot ve Java Swing kullanılarak geliştirilmiş, kullanıcıların kolayca rezervasyon yapmasına ve sipariş vermesine olanak sağlayan kapsamlı bir uygulamadır.
+A modern and user-friendly restaurant reservation management system. Developed with **Spring Boot** and **Java Swing**, this comprehensive application allows users to easily make reservations and place orders.
 
-## 📋 İçindekiler
+## 📋 Table of Contents
 
-- [Özellikler](#-özellikler)
-- [Teknolojiler](#-teknolojiler)
-- [Kurulum](#-kurulum)
-- [Kullanım](#-kullanım)
-- [API Dokümantasyonu](#-api-dokümantasyonu)
-- [Proje Yapısı](#-proje-yapısı)
-- [GUI Kullanımı](#-gui-kullanımı)
-- [Test Senaryoları](#-test-senaryoları)
-- [Katkıda Bulunma](#-katkıda-bulunma)
-- [Lisans](#-lisans)
+- [Features](#-features)  
+- [Technologies](#-technologies)  
+- [Installation](#-installation)  
+- [Usage](#-usage)  
+- [API Documentation](#-api-documentation)  
+- [Project Structure](#-project-structure)  
+- [GUI Usage](#-gui-usage)  
+- [Test Scenarios](#-test-scenarios)  
+- [Contributing](#-contributing)  
+- [License](#-license)
 
-## ✨ Özellikler
+## ✨ Features
 
-### Temel Özellikler
-- ✅ **Kullanıcı Yönetimi**: Kullanıcı ekleme, listeleme, güncelleme ve silme işlemleri
-- ✅ **Masa Yönetimi**: Masaların durumunu görüntüleme ve yönetme
-- ✅ **Rezervasyon Sistemi**: Otomatik rezervasyon kodu oluşturma ve yönetimi
-- ✅ **Sipariş Yönetimi**: Sipariş oluşturma, listeleme ve takip etme
-- ✅ **Menü Entegrasyonu**: Harici API'den (themealdb.com) menü kategorilerini çekme
-- ✅ **Raporlama**: Aylık doluluk raporları (PDF/Excel formatında)
-- ✅ **E-posta Bildirimleri**: Sistem loglarını e-posta ile gönderme
-- ✅ **Modern GUI**: Java Swing ile oluşturulmuş gradyan renkli ve kullanıcı dostu arayüz
+### Core Features
+- ✅ **User Management**: Add, list, update, and delete users  
+- ✅ **Table Management**: View and manage table availability  
+- ✅ **Reservation System**: Automatically generate and manage reservation codes  
+- ✅ **Order Management**: Create, list, and track customer orders  
+- ✅ **Menu Integration**: Fetch menu categories via external API (themealdb.com)  
+- ✅ **Reporting**: Monthly occupancy reports (PDF/Excel formats)  
+- ✅ **Email Notifications**: Send system logs via email  
+- ✅ **Modern GUI**: User-friendly Swing interface with gradient design  
 
-### GUI Özellikleri
-- 🎨 Modern gradyan arka plan tasarımı
-- 📱 Responsive ve kullanıcı dostu arayüz
-- 🎯 Sezgisel navigasyon
-- 💾 Rezervasyon kodunu panoya kopyalama
-- 🔄 Otomatik form temizleme
-- ✅ Anlık durum bildirimleri
+### GUI Features
+- 🎨 Modern gradient background design  
+- 📱 Responsive and intuitive interface  
+- 🎯 Easy navigation  
+- 💾 Copy reservation code to clipboard  
+- 🔄 Automatic form reset  
+- ✅ Real-time status notifications  
 
-## 🛠️ Teknolojiler
+## 🛠️ Technologies
 
 ### Backend
-- **Java**: 17
-- **Spring Boot**: 3.4.5
-- **Spring Data JPA**: Veritabanı işlemleri için
-- **Spring MVC**: REST API için
-- **Lombok**: Kod tekrarını azaltmak için
-- **H2 Database**: Geliştirme ortamı için yerel veritabanı
-- **PostgreSQL**: Production veritabanı desteği
+- **Java**: 17  
+- **Spring Boot**: 3.4.5  
+- **Spring Data JPA**: For database operations  
+- **Spring MVC**: For REST API  
+- **Lombok**: To reduce boilerplate code  
+- **H2 Database**: Local database for development  
+- **PostgreSQL**: Production database support  
 
 ### Frontend
-- **Java Swing**: Grafiksel kullanıcı arayüzü için
-- **Graphics2D**: Modern gradyan arka planlar için
+- **Java Swing**: For the graphical user interface  
+- **Graphics2D**: For modern gradient backgrounds  
 
-### Diğer Kütüphaneler
-- **iText**: PDF raporları oluşturmak için (v5.5.13.3)
-- **Apache POI**: Excel raporları oluşturmak için (v5.2.5)
-- **SpringDoc OpenAPI**: API dokümantasyonu için (v2.3.0)
-- **Spring Boot Mail**: E-posta göndermek için
+### Other Libraries
+- **iText**: For generating PDF reports (v5.5.13.3)  
+- **Apache POI**: For generating Excel reports (v5.2.5)  
+- **SpringDoc OpenAPI**: For API documentation (v2.3.0)  
+- **Spring Boot Mail**: For email functionality  
 
-### Test
-- **JUnit 5**: Birim testleri (v5.10.2)
-- **Mockito**: Test dublörü (mocking) kütüphanesi (v5.2.0)
-- **AssertJ**: Test assertion'ları için (v3.24.2)
+### Testing
+- **JUnit 5**: Unit testing (v5.10.2)  
+- **Mockito**: Mocking framework (v5.2.0)  
+- **AssertJ**: Fluent assertions (v3.24.2)  
 
-## 📦 Kurulum
+## 📦 Installation
 
-### Gereksinimler
-- Java 17 veya üzeri
-- Maven 3.6+ 
-- (Opsiyonel) PostgreSQL (production için)
+### Requirements
+- Java 17 or higher  
+- Maven 3.6+  
+- (Optional) PostgreSQL (for production)
 
-### Adımlar
+### Steps
 
-1. **Projeyi klonlayın**
+1. **Clone the project**
 ```bash
-git clone https://github.com/kullaniciadi/ReservationSystem.git
+git clone https://github.com/username/ReservationSystem.git
 cd ReservationSystem
 ```
 
-2. **Maven bağımlılıklarını yükleyin**
+2. **Install Maven dependencies**
 ```bash
 mvn clean install
 ```
 
-3. **Uygulamayı çalıştırın**
+3. **Run the application**
 ```bash
 mvn spring-boot:run
 ```
 
-Veya IDE'nizde `ReservationSystemApplication` sınıfını çalıştırın.
+Or run the `ReservationSystemApplication` class directly from your IDE.
 
-4. **Uygulamaya erişim**
-- Backend API: `http://localhost:8080`
-- Swagger UI: `http://localhost:8080/swagger-ui.html`
-- GUI otomatik olarak açılacaktır
+4. **Access the application**
+- Backend API: `http://localhost:8080`  
+- Swagger UI: `http://localhost:8080/swagger-ui.html`  
+- GUI will open automatically  
 
-### Yapılandırma
+### Configuration
 
-`src/main/resources/application.properties` dosyasında ayarları yapılandırabilirsiniz:
+Edit the `src/main/resources/application.properties` file:
 
 ```properties
-# Sunucu ayarları
+# Server configuration
 server.port=8080
 
-# Veritabanı ayarları (H2 - geliştirme için)
+# Database configuration (H2 - development)
 spring.datasource.url=jdbc:h2:mem:reservationdb
 spring.datasource.driverClassName=org.h2.Driver
 spring.h2.console.enabled=true
 
-# E-posta ayarları
+# Email configuration
 spring.mail.host=smtp.gmail.com
 spring.mail.port=587
 spring.mail.username=your-email@gmail.com
@@ -114,33 +114,33 @@ spring.mail.password=your-app-password
 spring.mail.properties.mail.smtp.auth=true
 spring.mail.properties.mail.smtp.starttls.enable=true
 
-# Loglama
+# Logging
 logging.file.name=reservation-system.log
 ```
 
-## 🚀 Kullanım
+## 🚀 Usage
 
-### GUI Kullanımı
+### GUI Usage
 
-1. **Rezervasyon Oluşturma**
-   - Uygulama başladığında otomatik olarak rezervasyon ekranı açılır
-   - İsim, soyisim ve tarih bilgilerini girin
-   - "✅ Rezervasyon Yap" butonuna tıklayın
-   - Rezervasyon kodunuz otomatik olarak oluşturulur
-   - "📋 Kopyala" butonu ile kodu panoya kopyalayın
+1. **Create a Reservation**
+   - The reservation screen opens automatically at startup.  
+   - Enter your name, surname, and date.  
+   - Click the **✅ Make Reservation** button.  
+   - Your reservation code is automatically generated.  
+   - Click **📋 Copy** to copy the code to your clipboard.  
 
-2. **Sipariş Oluşturma**
-   - Rezervasyon kodunu kopyaladıktan sonra sipariş ekranı otomatik açılır
-   - Veya manuel olarak rezervasyon kodunu girin
-   - Mevcut kategorilerden seçim yapın
-   - "➡️ Ekle" butonu ile kategorileri seçilenler listesine ekleyin
-   - "✅ Siparişi Oluştur" butonuna tıklayın
+2. **Create an Order**
+   - After copying the reservation code, the order screen opens automatically.  
+   - Or enter the reservation code manually.  
+   - Select categories from the available list.  
+   - Click **➡️ Add** to move them to the selected list.  
+   - Click **✅ Create Order** to complete your order.  
 
-### API Kullanımı
+### API Usage
 
-#### Kullanıcı İşlemleri
+#### User Operations
 
-**Yeni Kullanıcı Ekleme**
+**Add a New User**
 ```bash
 POST /rest/api/users/add
 Content-Type: application/json
@@ -152,12 +152,12 @@ Content-Type: application/json
 }
 ```
 
-**Tüm Kullanıcıları Listeleme**
+**List All Users**
 ```bash
 GET /rest/api/users/list
 ```
 
-**Kullanıcı Güncelleme**
+**Update a User**
 ```bash
 PUT /rest/api/users/update/{id}
 Content-Type: application/json
@@ -169,21 +169,21 @@ Content-Type: application/json
 }
 ```
 
-**Kullanıcı Silme**
+**Delete a User**
 ```bash
 DELETE /rest/api/users/delete/{id}
 ```
 
-#### Kategori İşlemleri
+#### Category Operations
 
-**Menü Kategorilerini Getirme**
+**Fetch Menu Categories**
 ```bash
 GET /rest/api/menu
 ```
 
-#### Sipariş İşlemleri
+#### Order Operations
 
-**Sipariş Oluşturma**
+**Create an Order**
 ```bash
 POST /rest/api/orders/save
 Content-Type: application/json
@@ -194,49 +194,49 @@ Content-Type: application/json
 }
 ```
 
-**Rezervasyon Koduna Göre Sipariş Getirme**
+**Get Order by Reservation Code**
 ```bash
 GET /rest/api/orders/{reservationCode}
 ```
 
-**Siparişi Kapatma**
+**Close an Order**
 ```bash
 POST /rest/api/orders/close/{id}
 ```
 
-#### Masa İşlemleri
+#### Table Operations
 
-**Tüm Masaları Listeleme**
+**List All Tables**
 ```bash
 GET /rest/api/tables
 ```
 
-#### Rapor İşlemleri
+#### Report Operations
 
-**Aylık Doluluk Raporu**
+**Monthly Occupancy Report**
 ```bash
 GET /rest/api/reports/{year}/{month}
 ```
 
-#### E-posta İşlemleri
+#### Email Operations
 
-**Log Dosyasını E-posta ile Gönderme**
+**Send Log File via Email**
 ```bash
 POST /rest/api/send-email
 Content-Type: application/json
 
 {
-  "to": "destinasyon@example.com",
-  "subject": "Rezervasyon Sistemi Logları"
+  "to": "destination@example.com",
+  "subject": "Reservation System Logs"
 }
 ```
 
-## 📚 API Dokümantasyonu
+## 📚 API Documentation
 
-Detaylı API dokümantasyonu için Swagger UI'ı kullanabilirsiniz:
+For detailed API documentation, visit Swagger UI:  
 - URL: `http://localhost:8080/swagger-ui.html`
 
-## 📁 Proje Yapısı
+## 📁 Project Structure
 
 ```
 ReservationSystem/
@@ -244,15 +244,15 @@ ReservationSystem/
 │   ├── main/
 │   │   ├── java/
 │   │   │   └── com/grup7/
-│   │   │       ├── Config/          # Yapılandırma sınıfları
-│   │   │       ├── Controller/     # REST API endpoint'leri
-│   │   │       ├── Dto/             # Veri transfer nesneleri
-│   │   │       ├── Entity/          # JPA varlıkları
-│   │   │       ├── Exception/       # Özel istisna sınıfları
-│   │   │       ├── GUI/             # Kullanıcı arayüzü bileşenleri
-│   │   │       ├── Repository/      # Veritabanı repository'leri
-│   │   │       ├── Service/         # İş mantığı servisleri
-│   │   │       ├── Util/            # Yardımcı sınıflar
+│   │   │       ├── Config/          # Configuration classes
+│   │   │       ├── Controller/      # REST API endpoints
+│   │   │       ├── Dto/             # Data transfer objects
+│   │   │       ├── Entity/          # JPA entities
+│   │   │       ├── Exception/       # Custom exception classes
+│   │   │       ├── GUI/             # GUI components
+│   │   │       ├── Repository/      # Database repositories
+│   │   │       ├── Service/         # Business logic services
+│   │   │       ├── Util/            # Utility classes
 │   │   │       └── ReservationSystem/
 │   │   │           └── ReservationSystemApplication.java
 │   │   └── resources/
@@ -261,112 +261,104 @@ ReservationSystem/
 │   └── test/
 │       └── java/
 │           └── com/grup7/
-│               └── Service/          # Test sınıfları
-├── pom.xml                          # Maven yapılandırması
-├── README.md                        # Bu dosya
+│               └── Service/          # Test classes
+├── pom.xml                           # Maven configuration
+├── README.md                         # This file
 └── .gitignore
 ```
 
-## 🖥️ GUI Kullanımı
+## 🧪 Test Scenarios
 
-### Rezervasyon Ekranı
-1. İsim ve soyisim bilgilerinizi girin
-2. Rezervasyon tarihini seçin (Gün/Ay/Yıl)
-3. "✅ Rezervasyon Yap" butonuna tıklayın
-4. Oluşturulan rezervasyon kodunuz ekranda görünecektir
-5. "📋 Kopyala" butonu ile kodu panoya kopyalayın
-
-### Sipariş Ekranı
-1. Rezervasyon kodunuzu girin (otomatik yapıştırılabilir)
-2. Sol listeden menü kategorilerini seçin
-3. "➡️ Ekle" butonu ile kategorileri seçilenler listesine ekleyin
-4. "⬅️ Çıkar" butonu ile kategorileri listeden çıkarabilirsiniz
-5. "✅ Siparişi Oluştur" butonu ile siparişinizi tamamlayın
-
-## 🧪 Test Senaryoları
-
-Proje kapsamlı birim testleri içermektedir. Testleri çalıştırmak için:
-
+Run tests with:
 ```bash
 mvn test
 ```
 
-### UserService Test Senaryoları
-- ✅ Geçerli bilgilerle kullanıcı ekleme
-- ❌ Boş isimle kullanıcı ekleme girişimi
-- ❌ Geçmiş tarihle kullanıcı ekleme girişimi
-- ❌ Uygun masa olmadan kullanıcı ekleme girişimi
+### UserService Test Scenarios
+- ✅ Add user with valid data  
+- ❌ Attempt to add user with empty name  
+- ❌ Attempt to add user with past date  
+- ❌ Attempt to add user when no tables are available  
 
-### ExternalMenuService Test Senaryoları
-- ✅ Dış API'den başarılı şekilde kategori verilerinin çekilmesi
-- ⚠️ Dış API'den boş kategori listesi dönmesi
-- ⚠️ Dış API'den null yanıt dönmesi
-- ❌ Dış API'den istisna (exception) fırlatılması
+### ExternalMenuService Test Scenarios
+- ✅ Successfully fetch category data from external API  
+- ⚠️ External API returns empty category list  
+- ⚠️ External API returns null response  
+- ❌ External API throws an exception  
 
-## 🔧 Geliştirme
+## 🔧 Development
 
-### Projeyi Geliştirme Ortamında Çalıştırma
+### Running in Development Mode
 
-1. IDE'nizde projeyi açın (IntelliJ IDEA, Eclipse, VS Code vb.)
-2. Maven bağımlılıklarının yüklendiğinden emin olun
-3. `ReservationSystemApplication` sınıfını çalıştırın
-4. GUI otomatik olarak açılacaktır
+1. Open the project in your IDE (IntelliJ IDEA, Eclipse, VS Code, etc.)  
+2. Ensure Maven dependencies are installed  
+3. Run `ReservationSystemApplication`  
+4. GUI will open automatically  
 
-### Yeni Özellik Ekleme
+### Adding a New Feature
 
-1. Yeni bir branch oluşturun: `git checkout -b feature/yeni-ozellik`
-2. Değişikliklerinizi yapın
-3. Testleri yazın ve çalıştırın
-4. Commit yapın: `git commit -m "Yeni özellik eklendi"`
-5. Branch'i push edin: `git push origin feature/yeni-ozellik`
-6. Pull Request oluşturun
+1. Create a new branch:  
+   ```bash
+   git checkout -b feature/new-feature
+   ```  
+2. Implement your changes  
+3. Write and run tests  
+4. Commit your changes:  
+   ```bash
+   git commit -m "Added new feature"
+   ```  
+5. Push your branch:  
+   ```bash
+   git push origin feature/new-feature
+   ```  
+6. Open a Pull Request  
 
-## 🤝 Katkıda Bulunma
+## 🤝 Contributing
 
-Katkılarınızı bekliyoruz! Lütfen şu adımları izleyin:
+We welcome contributions! Please follow these steps:
 
-1. Fork yapın
-2. Feature branch oluşturun (`git checkout -b feature/AmazingFeature`)
-3. Değişikliklerinizi commit edin (`git commit -m 'Add some AmazingFeature'`)
-4. Branch'inizi push edin (`git push origin feature/AmazingFeature`)
-5. Pull Request açın
+1. Fork the repository  
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)  
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)  
+4. Push to the branch (`git push origin feature/AmazingFeature`)  
+5. Open a Pull Request  
 
-### Katkı Kuralları
-- Kod standartlarına uyun
-- Unit testler yazın
-- README.md'yi güncelleyin
-- Açıklayıcı commit mesajları kullanın
+### Contribution Rules
+- Follow code style guidelines  
+- Write unit tests  
+- Update README.md if needed  
+- Use descriptive commit messages  
 
 ## 📝 Changelog
 
 ### v0.0.1-SNAPSHOT
-- ✨ İlk sürüm
-- ✅ Kullanıcı yönetimi
-- ✅ Rezervasyon sistemi
-- ✅ Sipariş yönetimi
-- ✅ Modern GUI arayüzü
-- ✅ REST API endpoint'leri
-- ✅ Raporlama özellikleri
-- ✅ E-posta bildirimleri
+- ✨ Initial release  
+- ✅ User management  
+- ✅ Reservation system  
+- ✅ Order management  
+- ✅ Modern GUI interface  
+- ✅ REST API endpoints  
+- ✅ Reporting features  
+- ✅ Email notifications  
 
-## 📄 Lisans
+## 📄 License
 
-Bu proje açık kaynak kodludur ve MIT lisansı altında lisanslanmıştır.
+This project is open source and licensed under the **MIT License**.
 
-## 👥 Ekip
+## 👥 Team
 
-Grup 7 tarafından geliştirilmiştir.
+Developed by **Group 7**.
 
-## 📧 İletişim
+## 📧 Contact
 
-Sorularınız için lütfen issue açın veya pull request gönderin.
+For questions, please open an issue or submit a pull request.
 
-## 🙏 Teşekkürler
+## 🙏 Acknowledgments
 
-- [Spring Boot](https://spring.io/projects/spring-boot)
-- [TheMealDB API](https://www.themealdb.com/)
-- Tüm açık kaynak kütüphane geliştiricilerine
+- [Spring Boot](https://spring.io/projects/spring-boot)  
+- [TheMealDB API](https://www.themealdb.com/)  
+- All open-source library developers  
 
 ---
 
-⭐ Bu projeyi beğendiyseniz yıldız vermeyi unutmayın!
+⭐ If you like this project, don’t forget to give it a star!
