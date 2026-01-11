@@ -353,10 +353,6 @@ We welcome your contributions! Please follow these steps:
 
 This project is open source and licensed under the MIT License.
 
-## 👥 Team
-
-Developed by Group 7.
-
 ## 📧 Contact
 
 For questions, please open an issue or submit a pull request.
