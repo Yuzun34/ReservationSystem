@@ -30,7 +30,7 @@ public class LogUtil {
             // Log bilgilerini dosyaya yaz
             writer.println("----------------------------------------");
             writer.println("Rezervasyon Kapandı");
-            writer.println("Current Date and Time (UTC): " + now.format(formatter));
+            writer.println("Current Date and Time (Europe/Istanbul): " + now.format(formatter));
             writer.println("Müşteri: " + customerName + " " + customerSurname);
             writer.println("Masa Numarası: " + tableNumber);
             writer.println("Rezervasyon Kodu: " + reservationCode);

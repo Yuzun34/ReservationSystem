@@ -34,6 +34,7 @@ public class ExternalMenuService {
         // API'den kategori bilgilerini al
         CategoryResponse categoryResponse = restTemplate.getForObject(apiUrl, CategoryResponse.class);
         // Null kontrolü yaparak kategori listesini veya boş liste döndür
-        return categoryResponse != null ? categoryResponse.getCategories() : new ArrayList<>();
+        return categoryResponse != null && categoryResponse.getCategories() != null
+                ? categoryResponse.getCategories() : new ArrayList<>();
     }
 }

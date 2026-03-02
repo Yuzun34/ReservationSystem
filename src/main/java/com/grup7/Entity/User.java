@@ -32,6 +32,7 @@ public class User {
 
     // Otomatik oluşturulan benzersiz rezervasyon kodu
     // "RZ53-" prefix'i ve UUID'nin ilk 10 karakteri ile oluşturulur
+    @Builder.Default
     private String reservationCode = "RZ53-"+ UUID.randomUUID().toString().substring(0,10);
 
     // Rezerve edilen masa bilgisi
