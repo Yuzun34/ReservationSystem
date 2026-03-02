@@ -3,20 +3,16 @@ package com.grup7.Controller;
 import com.grup7.Service.EmailService;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 @RestController
 @RequestMapping("/rest/api")
 @RequiredArgsConstructor
 public class EmailController {
 
-    @Autowired
     private final EmailService emailService;
     @PostMapping("/send-email")
     public ResponseEntity<String> sendLogsByEmail(@RequestParam String email) {
